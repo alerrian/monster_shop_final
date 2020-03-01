@@ -48,5 +48,18 @@ RSpec.describe 'As a merchant employee' do
       expect(page).to have_content("Items Required: 3")
       expect(page).to have_content("Percentage Off: 10")
     end
+
+    it 'cannot create a new discount with missing information' do
+      visit '/merchant/discounts'
+
+      click_on 'Add new Discount'
+
+      fill_in 'item_threshold', with: 3
+      fill_in 'percentage_off', with: 10
+
+      click_on 'Create Discount'
+
+      expect(page).to have_content("name: [\"can't be blank\"]")
+    end
   end
 end
