@@ -15,3 +15,28 @@ brian.items.create!(name: 'Hippo', description: "I'm a Hippo!", price: 50, image
 @merchant_2 = brian.users.create!(name: "Meg", address: "123 merchant ave.", city: "City of Townsville", state: "Nv", zip: "39433", email: "merchant2@gmail.com", password: "merchant2", role: 1)
 @user = User.create!(name: 'person', address: '123 W', city: 'a', state: 'IN', zip: 12345, email: 'user@gmail.com', password: 'user', role: 0)
 @admin = User.create(name: 'Kevin', address: '123 Street Road', city: 'City Name', state: 'CO', zip: 12345, email: 'admin@gmail.com', password: 'admin', role: 2)
+
+# discounts
+@discount_1 = @merchant_1.discounts.create!(
+  name: 'Small Discount',
+  item_threshold: 20,
+  percentage_off: 5
+)
+
+@discount_1 = megan.discounts.create!(
+  name: 'Small Discount',
+  item_threshold: 20,
+  percentage_off: 5
+)
+
+@discount_2 = megan.discounts.create!(
+  name: 'Large Discount',
+  item_threshold: 40,
+  percentage_off: 10
+)
+
+@discount_3 = brian.discounts.create!(
+  name: 'Large Discount',
+  item_threshold: 40,
+  percentage_off: 10
+)
