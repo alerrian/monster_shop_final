@@ -17,7 +17,7 @@ brian.items.create!(name: 'Hippo', description: "I'm a Hippo!", price: 50, image
 @admin = User.create(name: 'Kevin', address: '123 Street Road', city: 'City Name', state: 'CO', zip: 12345, email: 'admin@gmail.com', password: 'admin', role: 2)
 
 # discounts
-@discount_1 = @merchant_1.discounts.create!(
+@discount_1 = megan.discounts.create!(
   name: 'Small Discount',
   item_threshold: 20,
   percentage_off: 5
