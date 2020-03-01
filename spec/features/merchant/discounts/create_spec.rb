@@ -22,13 +22,31 @@ RSpec.describe 'As a merchant employee' do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@m_user)
   end
 
-  describe "When I try to create a discount" do
+  describe 'When I try to create a discount' do
     it 'can create a new discount' do
       visit '/merchant/discounts'
 
       click_on 'Add new Discount'
 
-      expect(current_path).to eq('/merchant/discounts/new') 
+      expect(current_path).to eq('/merchant/discounts/new')
+    end
+
+    it 'I can create a new discount' do
+      visit '/merchant/discounts'
+
+      click_on 'Add new Discount'
+
+      fill_in 'name', with: 'New Discount'
+      fill_in 'item_threshold', with: 3
+      fill_in 'percentage_off', with: 10
+
+      click_on 'Create Discount'
+
+      expect(current_path).to eq('/merchant/discounts')
+
+      expect(page).to have_content('New Discount')
+      expect(page).to have_content("Items Required: 3")
+      expect(page).to have_content("Percentage Off: 10")
     end
   end
 end
