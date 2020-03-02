@@ -8,6 +8,7 @@ class Merchant::DiscountsController < Merchant::BaseController
   end
 
   def new
+    @discount = Discount.new
   end
 
   def create
@@ -19,6 +20,22 @@ class Merchant::DiscountsController < Merchant::BaseController
     else
       generate_flash(discount)
       render :new
+    end
+  end
+
+  def edit
+    @discount = Discount.find(params[:id])
+  end
+
+  def update
+    @discount = Discount.find(params[:id])
+
+    if @discount.update(discount_params)
+      flash[:success] = 'Discount updated.'
+      redirect_to merchant_discount_path(@discount)
+    else
+      generate_flash(@discount)
+      render :edit
     end
   end
 
