@@ -22,13 +22,27 @@ RSpec.describe 'As a merchant employee' do
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@m_user)
   end
 
-  describe "When I try to see a specific discount" do
-    it 'I can see specific information about a discount' do
-      visit "merchant/discounts/#{@discount_1.id}"
+  describe "When I try to edit a discount" do
+    it 'can click an edit button next to each discount' do
+      visit "/merchant/discounts/#{@discount_1.id}"
 
-      expect(page).to have_content(@discount_1.name)
-      expect(page).to have_content(@discount_1.item_threshold)
-      expect(page).to have_content(@discount_1.percentage_off)
+      click_on 'Edit Discount'
+
+      expect(current_path).to eq(edit_merchant_discount_path(@discount_1))
+    end
+
+    it 'can edit a discount' do
+      visit "/merchant/discounts/#{@discount_1.id}"
+
+      click_on 'Edit Discount'
+
+      fill_in 'name', with: 'New Name for Discount'
+      fill_in 'item_threshold', with: 5
+      fill_in 'percentage_off', with: 10
+
+      click_on 'Update Discount'
+
+      expect(current_path).to eq("/merchant/discounts/#{@discount_1.id}")
     end
   end
 end
