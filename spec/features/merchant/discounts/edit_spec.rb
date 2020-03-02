@@ -43,6 +43,10 @@ RSpec.describe 'As a merchant employee' do
       click_on 'Update Discount'
 
       expect(current_path).to eq("/merchant/discounts/#{@discount_1.id}")
+
+      expect(page).to have_content("New Name for Discount")
+      expect(page).to have_content("Items Required: 5")
+      expect(page).to have_content("Percentage Off: 10")
     end
   end
 end
