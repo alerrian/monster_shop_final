@@ -37,10 +37,25 @@ class Cart
   end
 
   def subtotal_of(item_id)
-    count_of(item_id) * Item.find(item_id).price
+    item = Item.find(item_id)
+    discount = get_discount(item, item_id).compact.first
+
+    if !(discount.nil?)
+      (count_of(item_id) * item.price) - ((count_of(item_id) * item.price)*(discount.percentage_off.to_f/100))
+    else
+      count_of(item_id) * item.price
+    end
   end
 
   def limit_reached?(item_id)
     count_of(item_id) == Item.find(item_id).inventory
+  end
+
+  def get_discount(item, item_id)
+    discounts = item.merchant.discounts.order(item_threshold: :desc).map do |discount|
+      if @contents[item_id.to_s] >= discount.item_threshold
+        discount
+      end
+    end
   end
 end

@@ -9,13 +9,13 @@ RSpec.describe 'As a USER' do
 
     @discount_1 = @merchant_1.discounts.create!(
       name: 'Small Discount',
-      item_threshold: 20,
+      item_threshold: 3,
       percentage_off: 5
     )
 
     @discount_2 = @merchant_1.discounts.create!(
       name: 'Big Discount',
-      item_threshold: 40,
+      item_threshold: 4,
       percentage_off: 10
     )
 
@@ -28,19 +28,29 @@ RSpec.describe 'As a USER' do
 
     visit '/cart'
 
-    18.times do
+    2.times do
       click_on 'More of This!'
     end
 
     within "#item-#{@ogre.id}" do
-      expect(page).to have_content('Subtotal: $384.75')
+      expect(page).to have_content('Quantity: 3')
+      expect(page).to have_content('Subtotal: $57.71')
+    end
+  end
+
+  it 'can apply the small discount to an item' do
+    visit item_path(@ogre)
+    click_button 'Add to Cart'
+
+    visit '/cart'
+
+    3.times do
+      click_on 'More of This!'
     end
 
-    click_on 'More of This!'
-
     within "#item-#{@ogre.id}" do
-      expect(page).to have_content('Quantity: 20')
-      expect(page).to have_content('Subtotal: $384.75 (Discount of 5% applied!)')
+      expect(page).to have_content('Quantity: 4')
+      expect(page).to have_content('Subtotal: $72.90')
     end
   end
 end
